@@ -30,6 +30,7 @@ int score;
 int best;
 int idle_time = 30;
 float frame = 0;
+int background_iterator = 0;
 
 SDL_Event event;
 SDL_Renderer *renderer;
@@ -61,6 +62,14 @@ int main()
                         if (event.key.keysym.sym == SDLK_ESCAPE)
                                 {
                                         exit(0);
+                                }
+                        if (event.key.keysym.sym == SDLK_b)
+                                {
+                                        background_iterator = background_iterator + 1;
+                                }
+                        if (event.key.keysym.sym == SDLK_p)
+                                {
+                                        
                                 }
                                 if(gamestate == ALIVE)
                                 {
@@ -101,10 +110,13 @@ void setup()
         renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_PRESENTVSYNC);
         if(!renderer) exit(fprintf(stderr, "Could not create SDL renderer\n"));
 
-        surf = SDL_LoadBMP("res/pillar.bmp");
+        char background_img[50];
+        sprintf(background_img, "res/background%d.bmp", background_iterator%3);
+
+        surf = SDL_LoadBMP(background_img);
         SDL_SetColorKey(surf, 1, 0xffff00);
         pillar = SDL_CreateTextureFromSurface(renderer, surf);
-        surf = SDL_LoadBMP("res/background.bmp");
+        surf = SDL_LoadBMP("res/background0.bmp");
         background = SDL_CreateTextureFromSurface(renderer, surf);
 
         for(int i = 0; i < 4; i++)
